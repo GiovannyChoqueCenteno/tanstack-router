@@ -11,18 +11,24 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as ProfileImport } from './routes/profile'
 import { Route as IndexImport } from './routes/index'
+import { Route as RegrucIndexImport } from './routes/regruc/index'
+import { Route as FacturaclientIndexImport } from './routes/facturaclient/index'
 
 // Create/Update Routes
 
-const ProfileRoute = ProfileImport.update({
-  path: '/profile',
+const IndexRoute = IndexImport.update({
+  path: '/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
-  path: '/',
+const RegrucIndexRoute = RegrucIndexImport.update({
+  path: '/regruc/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const FacturaclientIndexRoute = FacturaclientIndexImport.update({
+  path: '/facturaclient/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -34,8 +40,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/profile': {
-      preLoaderRoute: typeof ProfileImport
+    '/facturaclient/': {
+      preLoaderRoute: typeof FacturaclientIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/regruc/': {
+      preLoaderRoute: typeof RegrucIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -43,6 +53,10 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([IndexRoute, ProfileRoute])
+export const routeTree = rootRoute.addChildren([
+  IndexRoute,
+  FacturaclientIndexRoute,
+  RegrucIndexRoute,
+])
 
 /* prettier-ignore-end */
